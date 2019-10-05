@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>CEE System</title>
+
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap-theme.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/estilo.css}" />
+	<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+	<div class="container-fluid" style="margin-top: 40px">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title"><strong><span th:text="${tituloForm}"></span></strong></h3>
+		  </div>
+		  <div class="panel-body">
+		    
+		<form th:object="${cidade}" th:action="@{/cidades}" method="post">
+		
+			<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+  				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  				<div th:each="erro : ${#fields.detailedErrors()}">
+  					<span th:text="${erro.message}">mensagem</span>
+  				</div>
+			</div>
+			
+			<input type="hidden" th:field="*{id}">
+			<div class="row">
+				<div class="form-group col-sm-9">
+					<label>Descrição</label>
+					<input type="text" autofocus="autofocus" placeholder="Nome da cidade" class="form-control" th:field="*{nome}"/>
+				</div>
+				
+				<div class="form-group col-sm-3">
+					<label>Estados</label>
+					<select class="form-control"  th:field="*{estado}">
+ 						<option th:each="uf : ${estados}" th:value="${uf}" th:text="${uf.uf} + ' - ' +${uf.nome}">Wireframe</option>
+					</select>
+				</div>
+				
+			</div>
+			<input type="submit" value="Salvar" class="btn btn-success"/>
+			<a class="btn btn-danger" th:href="@{/cidades}" role="button">Cancelar</a>
+		</form>
+		  </div>
+	
+		
+		<div class="panel-footer">
+			<h3 class="panel-title">&copy; 2019 CEE System - Controle de Equipamentos Eletrônicos</h3>
+		</div>
+			</div>
+	</div>
+
+</body>
+</html>

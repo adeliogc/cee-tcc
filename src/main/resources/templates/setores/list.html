@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CEE System</title>
+
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap-theme.min.css}" />
+<link rel="stylesheet" th:href="@{/css/confirm-dialog.css}" />
+<link rel="stylesheet" th:href="@{/css/estilo.css}" />
+
+<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"> -->
+<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
+<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> 
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" th:href="@{/}">CEE System</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+					<li><a href="#">Link</a></li>
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Cadastros <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a th:href="@{/cargos}">Cargos</a></li>
+							<li><a href="#">Cidades</a></li>
+							<li><a href="#">Colaboradores</a></li>
+							<li><a href="#">Equipamentos</a></li>
+							<li><a href="#">Setores</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div id="main" class="container-fluid" style="margin-top: 60px">
+	
+		<form method="get" class="form-horizontal">
+			<div class="form-group">
+				<div class="col-sm-5">
+					<div class="input-group">
+						<input class="form-control" placeholder="Informe o nome do setor" autofocus="autofocus" name="descricao"></input>
+						<span class="input-group-btn">
+							<button type="submit" class="btn btn-success">
+								<i class="glyphicon glyphicon-search"></i>
+							</button>
+						</span> 	
+						<span class="input-group-btn">
+							<button type="submit" class="btn btn-primary">
+								<i class="glyphicon glyphicon-print"></i>
+							</button>
+						</span> 						
+					</div>			
+				</div>
+			</div>
+		</form>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="clearfix">
+					<h3 class="panel-title titulo-panel">Pesquisa de Setores</h3>
+					<a class="btn btn-link link-panel" th:href="@{/setores/novo}"><strong><span class="glyphicon glyphicon-plus"></span>  Adicionar</strong></a>
+				</div>
+			</div>
+			<div class="panel-body">
+			
+				<div class="alert" th:if="${!#strings.isEmpty(mensagem)}" th:classappend="${erro ? 'alert-danger' : 'alert-success'}">
+					 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<span th:text="${mensagem}"></span>
+				</div>
+			<table class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th class="text-center col-md-1">Id</th>
+						<th>Descrição</th>
+						<th class="text-center col-md-2">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="setor: ${setores}">
+						<td class="text-center" th:text="${setor.idFormatado}">1001</td>
+						<td th:text="${setor.nome}">Analista de Sistemas</td>
+						<td class="text-center">
+							<a class="btn btn-warning btn-xs" th:href="@{/setores/edit/{id}(id=${setor.id})}"><span class="glyphicon glyphicon-edit"></span>  Editar</a> 
+							<a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal-warning"
+								th:attr="data-target='#modal-warning'+${setor.id }"><span class="glyphicon glyphicon-trash"></span>  Excluir</a>
+							<div class="modal modal-warning fade in" th:id="modal-warning+${setor.id }">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close"><span aria-hidden="true">×</span>
+											</button>
+											<h3 class="modal-title"><strong>Confirmação</strong></h3>
+										</div>
+										<div class="modal-body text-left">
+											<h4>Deseja excluir esse registro ?</h4>
+											<strong><span th:text="${setor.idFormatado}+' - '+${setor.nome}">${c.nome}</span></strong>
+										</div>
+										<div class="modal-footer">
+											<a type="button" class="btn btn-danger" th:href="@{/setores/excluir/{id}(id=${setor.id})}">Confirmar</a>
+											<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="6" th:if="${#lists.isEmpty(setores)}"><strong>Nenhum registro encontrado...</strong></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>	
+	</div>
+	</div>
+	<div th:replace="~{layout/rodape :: rodape}"></div>
+</body>
+</html>

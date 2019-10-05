@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CEE System</title>
+
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap-theme.min.css}" />
+<link rel="stylesheet" th:href="@{/css/estilo.css}" />
+<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.mask.min.js}"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#cep').mask('00000-000');
+		$('#cpf').mask('000.000.000-00');
+		$('#celular').mask('(00) 00000-0000');
+		$('#telefone').mask('(00) 0000-0000');
+	})
+</script>
+</head>
+<body>
+
+	<div class="container-fluid" style="margin-top: 40px">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<strong><span th:text="${tituloForm}"></span></strong>
+				</h3>
+			</div>
+			<div class="panel-body">
+				<form th:object="${funcionario}" th:action="@{/funcionarios}" method="post">
+
+					<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<div th:each="erro : ${#fields.detailedErrors()}">
+							<span th:text="${erro.message}">mensagem</span>
+						</div>
+					</div>
+
+					<input type="hidden" th:field="*{id}">
+					<div class="row">
+						<div class="form-group col-sm-8">
+							<label>Nome Completo</label> 
+							<input type="text" autofocus="autofocus" placeholder="Nome Completo" 
+								class="form-control" th:field="*{nome}" />
+						</div>
+						<div class="form-group col-sm-2">
+							<label>Matrícula</label> 
+							<input type="text" placeholder="Matrícula" class="form-control"
+								th:field="*{matricula}" />
+						</div>
+						<div class="form-group col-sm-2">
+							<label>Sexo</label> 
+							<select class="form-control" th:field="*{sexo}">
+								<option th:each="sexo : ${sexos}" th:text="${sexo.nome}" th:value="${sexo}"/>
+							</select>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group col-sm-5">
+							<label>Logradouro</label> 
+							<input type="text" placeholder="Rua, Avenida, Estrada..." 
+								class="form-control" th:field="*{endereco.logradouro}" />
+						</div>
+						<div class="form-group col-sm-1">
+							<label>Número</label> 
+							<input type="text" placeholder="Nº" class="form-control" th:field="*{endereco.numero}" />
+						</div>
+						<div class="form-group col-sm-2">
+							<label>Complemento</label> 
+							<input type="text" placeholder="Quadra, Lote, Esquina..." 
+								class="form-control" th:field="*{endereco.complemento}" />
+						</div>
+						<div class="form-group col-sm-3">
+							<label>Bairro</label> 
+							<input type="text" placeholder="Bairro" class="form-control" 
+								th:field="*{endereco.bairro}" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group col-sm-3">
+							<label>Cidades</label> 
+							<select class="form-control" th:field="*{endereco.cidade}">
+								<option th:each="cidade : ${cidades}" th:value="${cidade.id}" th:text="${cidade.nome}" />
+							</select>
+						</div>
+						<div class="form-group col-sm-2">
+							<label>CEP</label> 
+							<input id="cep" type="text" placeholder="00000-000" class="form-control"
+								th:field="*{endereco.cep}" />
+						</div>
+						<div class="form-group col-sm-2">
+							<label>RG</label> 
+							<input type="text" placeholder="Documento de Indentidade" class="form-control"
+								th:field="*{identidade}" />
+						</div>
+						<div class="form-group col-sm-2">
+							<label>CPF</label> 
+							<input id="cpf" type="text" placeholder="000.000.000-00" class="form-control"
+								th:field="*{cpf}" />
+						</div>
+					</div>
+
+					<ul class="nav nav-tabs">
+						<li class="active">
+							<a data-toggle="tab" href="#cargo_setor">Cargo / Setor</a>
+						</li>
+						<li>
+							<a data-toggle="tab" href="#contatos">Dados para Contato</a>
+						</li>
+						<li>
+							<a data-toggle="tab" href="#observacoes">Observações</a>
+						</li>
+					</ul>
+
+					<div class="tab-content">
+						<div id="cargo_setor" class="tab-pane fade in active">
+							<div class="row">
+								<div class="form-group col-sm-6">
+									<label>Setores</label> 
+									<select class="form-control" th:field="*{setor}">
+										<option th:each="setor : ${setores}" th:value="${setor.id}"
+											th:text="${setor.nome}" />
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-sm-6">
+									<label>Cargos</label> 
+									<select class="form-control" th:field="*{cargo}">
+										<option th:each="cargo : ${cargos}" th:value="${cargo.id}"
+											th:text="${cargo.nome}" />
+									</select>
+								</div>
+							</div>
+						</div>
+						<div id="contatos" class="tab-pane fade">
+							<div class="row">
+								<div class="form-group col-sm-2">
+									<label>Telefone</label> 
+									<input id="telefone" type="text" placeholder="(00) 0000-0000" class="form-control"
+											th:field="*{telefone}" />
+								</div>
+								<div class="form-group col-sm-2">
+									<label>Celular</label> 
+									<input id="celular" type="text" placeholder="(00) 0000-0000" class="form-control"
+											th:field="*{celular}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-sm-4">
+									<label>Telefone</label> 
+									<input type="text" placeholder="E-mail de contato" class="form-control"
+											th:field="*{email}" />
+								</div>
+							</div>
+						</div>
+						<div id="observacoes" class="tab-pane fade">
+							<textarea rows="3" cols="12" class="form-control"></textarea>
+						</div>
+					</div>
+	
+			<button type="submit" class="btn btn-success" >
+				<span class="glyphicon glyphicon-ok"></span>  Salvar
+			</button> 
+				<a class="btn btn-danger" th:href="@{/funcionarios}" role="button"><span class="glyphicon glyphicon-off"></span>  Cancelar</a>
+			</form>
+		</div>
+		<div class="panel-footer">
+			<h3 class="panel-title">&copy; 2019 CEE System - Controle de Equipamentos Eletrônicos</h3>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

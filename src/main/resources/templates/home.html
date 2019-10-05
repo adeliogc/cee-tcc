@@ -1,10 +1,169 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+    <title>CEE System - Controle de Equipamentos Eletrônicos</title>
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/3.4.1/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/3.4.1/css/bootstrap-theme.min.css}">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" th:href="@{/css/confirm-dialog.css}"/> 
+ 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" >
+ 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+ 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+ 		
+ 	<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script> 
+ 	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+ 	<script type="text/javascript" th:src="@{/js/script.js}"></script>
 </head>
 <body>
-	<h2>Ola mundo!!!</h2>
+	 
+	    <nav class="navbar navbar-default sidebar" role="navigation">
+	    <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>      
+	    </div>
+	    <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li class="active"><a th:href="@{/}">Página Inicial<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cadastros <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-hdd"></span></a>
+	          <ul class="dropdown-menu forAnimate" role="menu">
+	            <li><a th:href="@{/cargos}">Cargos</a></li>
+	            <li><a th:href="@{/cidades}">Cidades</a></li>
+	            <li><a th:href="@{/equipamentos}">Equipamentos</a></li>
+	            <li><a th:href="@{/funcionarios}">Funcionários</a></li>
+	            <li><a th:href="@{/setores}">Setores</a></li>
+	            <li class="divider"></li>
+	            <li><a href="#"><span class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span>Usuários</a></li>
+	            
+	          </ul>
+	        </li>          
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ordem de Serviços <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-wrench"></span></a>
+	          <ul class="dropdown-menu forAnimate" role="menu">
+	            <li><a href="#">Abertura de O.S.</a></li>
+	            <li><a href="#">Encerramento de O.S.</a></li>
+	          </ul>
+	        </li>     
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Empréstimos<span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-copy"></span></a>
+	          <ul class="dropdown-menu forAnimate" role="menu">
+	            <li><a href="#">Empréstimo de Equip.</a></li>
+	            <li><a href="#">Devolução de Equip.</a></li>
+	          </ul>
+	        </li>     
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+    
+    <div class="main">     
+        
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-3 text-center">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Total de Equipamentos</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h3><span th:text="${totalEquipamentos}">001</span></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 text-center">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Total de Colaboradores</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h3><span th:text="${totalColaboradores}"></span></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 text-center">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Equipamentos em Manutenção</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h3><span th:text="|${equipamentosEmManutencao} %|"></span></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 text-center">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Equipamentos Emprestados</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h3><span th:text="|${equipamentosEmprestados} %|"></span></h3>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Manutenções por Setor</h3>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Setor</th>
+                                            <th class="hidden-xs">Quant.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="emp : ${emprestimosPorSetor}">
+                                            <td th:text="${emp.setor.nome}">11</td>
+                                            <td th:text="${emp.quantidade}">34</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <div class="col-md-6">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Ordens de Serviço por Categoria</h3>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Categoria</th>
+                                            <th class="hidden-xs">Quant.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="os : ${ordemServicoPorCategoria}">
+                                            <td th:text="${os.categoria.nome}">Front-end</td>
+                                            <td th:text="${os.quantidade}">33</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+
 </body>
 </html>
