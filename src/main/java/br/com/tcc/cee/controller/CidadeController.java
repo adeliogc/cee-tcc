@@ -27,20 +27,15 @@ public class CidadeController implements IController<Cidade>{
 
 	@Autowired
 	private CidadeRepository cidadeRepository;
-	private String descricao = "";
-	
 	
 	@Override
 	@GetMapping
 	public ModelAndView listar() {
 		ModelAndView modelAndView = new ModelAndView("cidades/list");
-		if (descricao.isEmpty()) {
-			modelAndView.addObject("cidades", cidadeRepository.findAll());
-		} else {
-			modelAndView.addObject("cidades", cidadeRepository.findByNomeContaining(descricao.toUpperCase()));
-		}
+		modelAndView.addObject("cidades", cidadeRepository.findAll());
 		return modelAndView;
 	}
+	
 
 	@Override
 	@GetMapping("cadastros")
@@ -101,6 +96,14 @@ public class CidadeController implements IController<Cidade>{
 	@ModelAttribute("estados")
 	public List<Estado> getEstados(){
 		return Arrays.asList(Estado.values());
+	}
+
+	@Override
+	@PostMapping("filtro")
+	public ModelAndView listarPorDescricao(String descricao) {
+		ModelAndView modelAndView = new ModelAndView("cidades/list");
+		modelAndView.addObject("cidades", cidadeRepository.findByNomeContaining(descricao.toUpperCase()));
+		return modelAndView;
 	}
 
 }

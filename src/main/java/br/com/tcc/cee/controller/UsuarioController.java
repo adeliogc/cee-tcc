@@ -7,15 +7,17 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.tcc.cee.modelo.Perfil;
-import br.com.tcc.cee.modelo.Setor;
 import br.com.tcc.cee.modelo.Usuario;
 import br.com.tcc.cee.repository.UsuarioRepository;
 
@@ -25,17 +27,12 @@ public class UsuarioController implements IController<Usuario>{
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	private String descricao = "";
 
 	@Override
 	@GetMapping
 	public ModelAndView listar() {
 		ModelAndView mv = new ModelAndView("usuarios/list");
-		if (descricao.isEmpty()) {
-			mv.addObject("usuarios", usuarioRepository.findAll());
-		} else {
-			//mv.addObject("usuarios", usuarioRepository.findByNomeContaining(descricao.toUpperCase()));			
-		}
+		mv.addObject("usuarios", usuarioRepository.findAll());
 		return mv;
 	}
 
@@ -76,5 +73,14 @@ public class UsuarioController implements IController<Usuario>{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	@PostMapping("filtro")
+	public ModelAndView listarPorDescricao(@Nullable @RequestParam("descricao") String descricao) {
+		ModelAndView mv = new ModelAndView("usuarios/list");
+		mv.addObject("usuarios", usuarioRepository.findByNomeContaining(descricao.toUpperCase()));
+		return mv;
+	}
+
 
 }

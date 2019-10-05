@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,17 +29,12 @@ public class CargoController implements IController<Cargo>{
 	
 	@Autowired
 	private CargoRepository cargoRepository;
-	private String descricao = "";
 	
 	@GetMapping
 	@Override
 	public ModelAndView listar() {
 		ModelAndView modelAndView = new ModelAndView("cargos/list");
-		if (descricao.isEmpty()) {
-			modelAndView.addObject("cargos", cargoRepository.findAll());
-		} else {
-			modelAndView.addObject("cargos", cargoRepository.findByNomeContaining(descricao.toUpperCase()));
-		}
+		modelAndView.addObject("cargos", cargoRepository.findAll());
 		return modelAndView;
 	}
 	
@@ -101,6 +98,15 @@ public class CargoController implements IController<Cargo>{
 		attr.addFlashAttribute("erro", false);
 		attr.addFlashAttribute("mensagem", Constantes.MENSAGEM_SALVO);
 		return mv;
+	}
+
+	
+	@PostMapping("filtro")
+	@Override
+	public ModelAndView listarPorDescricao(@Nullable @RequestParam("descricao") String descricao) {
+		ModelAndView modelAndView = new ModelAndView("cargos/list");
+		modelAndView.addObject("cargos", cargoRepository.findByNomeContaining(descricao.toUpperCase()));
+		return modelAndView;
 	}
 
 }

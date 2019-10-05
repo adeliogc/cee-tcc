@@ -56,7 +56,7 @@
 
 	<div id="main" class="container-fluid" style="margin-top: 60px">
 	
-		<form method="get" class="form-horizontal">
+		<form method="post" class="form-horizontal" action="/usuarios/filtro">
 			<div class="form-group">
 				<div class="col-sm-5">
 					<div class="input-group">
@@ -95,7 +95,7 @@
 						<th class="text-center col-md-2">Login</th>
 						<th>Nome Completo</th>
 						<th class="text-center col-md-2">Perfil</th>
-						<th class="text-center col-md-3">Ações</th>
+						<th class="text-center col-md-2">Ações</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -104,10 +104,12 @@
 						<td th:text="${usr.nome}">Analista de Sistemas</td>
 						<td th:text="${usr.perfil.nome}">Analista de Sistemas</td>
 						<td class="text-center">
-							<a class="btn btn-success btn-xs" th:href="@{/usuarios/ativar/{id}(id=${usr.id})}"><span class="glyphicon glyphicon-edit" ></span>  th:if="${!#bools.isTrue(usr.ativo) ? 'Inativar' : 'Ativar'}"</a>
-							<a class="btn btn-warning btn-xs" th:href="@{/usuarios/edit/{id}(id=${usr.id})}"><span class="glyphicon glyphicon-edit"></span>  Editar</a>  
+							<button type="button" class="btn btn-success btn-xs" th:text="${usr.ativo} ? 'Inativar' : 'Ativar'" th:href="@{/usuarios/ativar/{id}(id=${usr.id})}" >
+								  <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+							</button>
+							<a class="btn btn-warning btn-xs" th:href="@{/usuarios/edit/{id}(id=${usr.id})}">Editar</a>  
 							<a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal-warning"
-								th:attr="data-target='#modal-warning'+${usr.id }"><span class="glyphicon glyphicon-trash"></span>  Excluir</a>
+								th:attr="data-target='#modal-warning'+${usr.id }">Excluir</a>
 							<div class="modal modal-warning fade in" th:id="modal-warning+${usr.id }">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
@@ -131,7 +133,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="6" th:if="${#lists.isEmpty(setores)}"><strong>Nenhum registro encontrado...</strong></td>
+						<td colspan="6" th:if="${#lists.isEmpty(usuarios)}"><strong>Nenhum registro encontrado...</strong></td>
 					</tr>
 				</tbody>
 			</table>
