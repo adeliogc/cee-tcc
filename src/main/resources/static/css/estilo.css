@@ -13,3 +13,23 @@ titulo{
 	font-weight: bold;
 }
 
+
+.form-container {
+    width: 100vw;
+    height: 100vh;
+    background: #6C7A89;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}
+ 
+#form-box {
+    width: 300px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+ 
+#form-box input {
+    font-size: large;
+}

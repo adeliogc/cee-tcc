@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import br.com.tcc.cee.modelo.Funcionario;
 import br.com.tcc.cee.modelo.Setor;
 import br.com.tcc.cee.repository.SetorRepository;
 import br.com.tcc.cee.util.Constantes;
+import br.com.tcc.cee.util.GerenciadorRelatorios;
 
 @RequestMapping("setores")
 @Controller
@@ -31,6 +34,9 @@ public class SetorController implements IController<Setor>{
 	@Autowired
 	private SetorRepository setorRepository;
 	private String descricao = "";
+	
+	@Autowired
+	private GerenciadorRelatorios gerenciadorRelatorios;
 	
 	@Override
 	@GetMapping
@@ -114,6 +120,33 @@ public class SetorController implements IController<Setor>{
 		mv.addObject("setores", setorRepository.findByNomeContaining(descricao.toUpperCase()));
 		return mv;
 	}
+	
+	
+	@GetMapping("filtro")
+	public void imprimir(@Nullable @RequestParam("descricao") String descricao, HttpServletRequest request, 
+			HttpServletResponse response) {
+		List<Setor> setores = new ArrayList<>();
+		setores = Arrays.asList(new Setor("almoxarifado agricola"), new Setor("almoxarifado industrial"),
+				new Setor("administracao"), new Setor("industria"), new Setor("buriti i"), 
+				new Setor("oficina mecanica"), new Setor("posto"), new Setor("laboratorio"));
+		try {
+			byte[] impressao = gerenciadorRelatorios.imprimir(setores, "relatorio_setores", request.getServletContext());
+			response.setContentLength(impressao.length);
+			response.setContentType("application/octet-stream");
+			String headerKey = "Content-Disposition";
+			String headerValue = String.format("attachment; filename=\"%s\"", "relatorio.pdf");
+			response.setHeader(headerKey, headerValue);
+			response.getOutputStream().write(impressao);
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+	}
+	
 
 
 }

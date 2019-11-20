@@ -10,12 +10,13 @@ import org.springframework.format.annotation.NumberFormat.Style;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import br.com.tcc.cee.dto.EmprestimoSetorDTO;
 import br.com.tcc.cee.dto.OrdemServicoDTO;
 import br.com.tcc.cee.modelo.Categoria;
 import br.com.tcc.cee.modelo.Setor;
+import br.com.tcc.cee.modelo.Usuario;
 import br.com.tcc.cee.repository.EquipamentoRepository;
 import br.com.tcc.cee.repository.FuncionarioRepository;
 
@@ -27,9 +28,21 @@ public class HomeController {
 	@Autowired
 	private EquipamentoRepository equipamentoRepository;
 	
-	@RequestMapping("/")
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+	
+	@GetMapping("/")
 	public String home() {
 		return "home";
+	}
+	
+	@GetMapping("/cria-usuario")
+	public ModelAndView criaUsuario() {
+		ModelAndView mv = new ModelAndView("cria-usuario");
+		mv.addObject("usuario", new Usuario());
+		return mv;
 	}
 	
 	@ModelAttribute("ordemServicoPorCategoria")

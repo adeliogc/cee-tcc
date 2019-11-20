@@ -1,7 +1,6 @@
 package br.com.tcc.cee.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -11,6 +10,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.tcc.cee.modelo.Perfil;
 import br.com.tcc.cee.modelo.Usuario;
 import br.com.tcc.cee.repository.UsuarioRepository;
+import br.com.tcc.cee.util.Constantes;
 
 @RequestMapping("usuarios")
 @Controller
@@ -41,12 +43,12 @@ public class UsuarioController implements IController<Usuario>{
 	public ModelAndView saveAll() {
 		ModelAndView mv = new ModelAndView("redirect:/usuarios");
 		List<Usuario> usuarios = new ArrayList<>();
-		usuarios = Arrays.asList(new Usuario("batman", "batman", "12345", Perfil.ADMINISTRADOR), 
-				new Usuario("superman", "superman", "1234", Perfil.USUARIO), 
-				new Usuario("robin", "robin", "1010", Perfil.USUARIO), 
-				new Usuario("flash", "flash", "12345", Perfil.USUARIO), 
-				new Usuario("aquaman", "aquaman", "12345", Perfil.ADMINISTRADOR));
-		usuarioRepository.saveAll(usuarios);
+//		usuarios = Arrays.asList(new Usuario("batman", "batman", new BCryptPasswordEncoder().encode("1010"), Perfil.ADMINISTRADOR), 
+//				new Usuario("superman", "superman", new BCryptPasswordEncoder().encode("1234"), Perfil.USUARIO), 
+//				new Usuario("robin", "robin", new BCryptPasswordEncoder().encode("1010"), Perfil.USUARIO), 
+//				new Usuario("flash", "flash", new BCryptPasswordEncoder().encode("12345"), Perfil.USUARIO), 
+//				new Usuario("aquaman", "aquaman", new BCryptPasswordEncoder().encode("1010"), Perfil.ADMINISTRADOR));
+//		usuarioRepository.saveAll(usuarios);
 		return mv;
 	}
 
@@ -63,9 +65,13 @@ public class UsuarioController implements IController<Usuario>{
 	}
 
 	@Override
-	public ModelAndView delete(Long id, RedirectAttributes atts) {
-		// TODO Auto-generated method stub
-		return null;
+	@GetMapping("excluir/{id}")
+	public ModelAndView delete(@PathVariable("id") Long id, RedirectAttributes atts) {
+		ModelAndView mv = new ModelAndView("redirect:/usuarios");
+		usuarioRepository.deleteById(id);
+		atts.addFlashAttribute("erro", false);			
+		atts.addFlashAttribute("mensagem", Constantes.MENSAGEM_EXCLUSAO);
+		return mv;
 	}
 
 	@Override
@@ -79,6 +85,20 @@ public class UsuarioController implements IController<Usuario>{
 	public ModelAndView listarPorDescricao(@Nullable @RequestParam("descricao") String descricao) {
 		ModelAndView mv = new ModelAndView("usuarios/list");
 		mv.addObject("usuarios", usuarioRepository.findByNomeContaining(descricao.toUpperCase()));
+		return mv;
+	}
+	
+	@PostMapping("salvarUsuario")
+	public ModelAndView cadastroUsuario(@Valid @ModelAttribute("usuario") Usuario entity, BindingResult result, RedirectAttributes attr) {
+		entity.setPerfil(Perfil.USUARIO);
+		if (result.hasErrors()) {
+			ModelAndView mv = new ModelAndView("cria-usuario");
+			return mv;
+		}
+		usuarioRepository.save(entity);
+		ModelAndView mv = new ModelAndView("redirect:/cria-usuario");
+		attr.addFlashAttribute("mensagem", Constantes.MENSAGEM_SALVO);
+		
 		return mv;
 	}
 

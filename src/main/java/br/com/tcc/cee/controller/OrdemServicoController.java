@@ -1,24 +1,12 @@
 package br.com.tcc.cee.controller;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.com.tcc.cee.modelo.Equipamento;
 import br.com.tcc.cee.modelo.OrdemServico;
-import br.com.tcc.cee.modelo.OrdemServicoItem;
-import br.com.tcc.cee.modelo.StatusOS;
 import br.com.tcc.cee.repository.EquipamentoRepository;
 import br.com.tcc.cee.repository.OrdemServicoRepository;
 
@@ -32,8 +20,6 @@ public class OrdemServicoController {
 	private OrdemServicoRepository osRepository;
 	private OrdemServico os = new OrdemServico();
 
-	
-	
 
 	@GetMapping("baixar-os")
 	public ModelAndView baixar() {
@@ -42,44 +28,45 @@ public class OrdemServicoController {
 		return mv;	
 	}
 	
-	@GetMapping("abertura-os")
-	public ModelAndView form() {
-		ModelAndView mv = new ModelAndView("ordem-servicos/abertura-os");
-		mv.addObject("os", os);
-		mv.addObject("itemOs", new OrdemServicoItem());
-		return mv;
-	}
+//	@GetMapping("abertura-os")
+//	public ModelAndView form() {
+//		ModelAndView mv = new ModelAndView("ordem-servicos/abertura-os");
+//		mv.addObject("os", os);
+//		mv.addObject("itemOs", new OrdemServicoItem());
+//		return mv;
+//	}
 	
-	@ModelAttribute("equipamentos")
-	public List<Equipamento> getEquipamentos(){
-		return equipamentoRepository.findAll();
-	}
+//	@ModelAttribute("equipamentos")
+//	public List<Equipamento> getEquipamentos(){
+//		return equipamentoRepository.findAll();
+//	}
+//	
+//	@ModelAttribute("statusOs")
+//	public List<StatusOS> getStatus(){
+//		return Arrays.asList(StatusOS.values());
+//	}
 	
-	@ModelAttribute("statusOs")
-	public List<StatusOS> getStatus(){
-		return Arrays.asList(StatusOS.values());
-	}
+//	@PostMapping("abertura-os")
+//	public ModelAndView salvarOs(@Valid @ModelAttribute("os") OrdemServico os, BindingResult result, RedirectAttributes attr) {
+//		if (result.hasErrors()) {
+//			ModelAndView mv = new ModelAndView("ordem-servicos/abertura-os");
+//			return mv;
+//		} else {
+//			ModelAndView mv = new ModelAndView("redirect:/ordemServicos/abertura-os");
+//			//os.geraNumeroOrdemServico(osRepository);
+//			
+//			osRepository.save(os);
+//			attr.addFlashAttribute("erro", false);
+//			attr.addFlashAttribute("mensagem", "Ordem de Serviço gerada com o número " + os.getNumeroOrdemServico());
+//			return mv;
+//		}
+//	}
 	
-	@PostMapping("abertura-os")
-	public ModelAndView salvarOs(@Valid @ModelAttribute("os") OrdemServico os, BindingResult result, RedirectAttributes attr) {
-		if (result.hasErrors()) {
-			ModelAndView mv = new ModelAndView("ordem-servicos/abertura-os");
-			return mv;
-		} else {
-			ModelAndView mv = new ModelAndView("redirect:/ordemServicos/abertura-os");
-			//os.geraNumeroOrdemServico(osRepository);
-			
-			osRepository.save(os);
-			attr.addFlashAttribute("erro", false);
-			attr.addFlashAttribute("mensagem", "Ordem de Serviço gerada com o número " + os.getNumeroOrdemServico());
-			return mv;
-		}
-	}
+//	public ModelAndView addItem(OrdemServicoItem item) {
+//		ModelAndView mv = new ModelAndView("ordemServicos/abertura-os");
+//		//attr.addFlashAttribute("mensagem", "Ordem de Serviço gerada com o número " + os.getNumeroOrdemServico());
+//		return mv;
+//	}
 	
-	public ModelAndView addItem(OrdemServicoItem item) {
-		ModelAndView mv = new ModelAndView("ordemServicos/abertura-os");
-		//attr.addFlashAttribute("mensagem", "Ordem de Serviço gerada com o número " + os.getNumeroOrdemServico());
-		return mv;
-	}
 	
 }
