@@ -65,7 +65,7 @@ public class OrdemServicoResource {
 			itemBean.setStatus(item.getStatus().getDescricao());
 			beanDTO.getItems().add(itemBean);					
 		}
-		return beanDTO == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(beanDTO, HttpStatus.OK);
+		return ordemServico == null ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(beanDTO, HttpStatus.OK);
 	}
 
 }
