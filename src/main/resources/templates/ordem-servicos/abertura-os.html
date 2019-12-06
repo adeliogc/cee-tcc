@@ -12,37 +12,58 @@
 <link rel="stylesheet" th:href="@{/css/confirm-dialog.css}" />
 <link rel="stylesheet" th:href="@{/css/estilo.css}" />
 
-<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"> -->
-<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-
 <script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
-<head></head>
+
+</head>
 <body>
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-					aria-expanded="false" aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> 
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">E</a>
+				<a class="navbar-brand" th:href="@{/}">CEE System</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-					<li><a href="#">Link</a></li>
-					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button"
-							aria-haspopup="true" aria-expanded="false">Cadastros <span class="caret"></span></a>
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Cadastros <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">Cargos</a></li>
-							<li><a href="#">Cidades</a></li>
-							<li><a href="#">Colaboradores</a></li>
-							<li><a href="#">Equipamentos</a></li>
-							<li><a href="#">Setores</a></li>
+							<li><a th:href="@{/cargos}">Cargos</a></li>
+							<li><a th:href="@{/cidades}">Cidades</a></li>
+							<li><a th:href="@{/equipamentos}">Equipamentos</a></li>
+							<li><a th:href="@{/funcionarios}">Funcionários</a></li>
+							<li><a th:href="@{/setores}">Setores</a></li>
+							<li class="divider"></li>
+	            			<li><a th:href="@{/usuarios}"><span class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span>Usuários</a></li>
+							
+						</ul>
+					</li>
+					
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Ordem de Serviços <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Abertura de O.S.</a></li> 
+	            			<li><a th:href="@{/ordemServicos/baixar-os}">Encerramento de O.S.</a></li>
+							
+						</ul>
+					</li>
+					
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Empréstimos <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Empréstimo de Equip.</a></li> 
+	            			<li><a href="#">Devolução de Equip.</a></li>
+							
 						</ul>
 					</li>
 				</ul>
@@ -50,7 +71,7 @@
 		</div>
 	</nav>
 
-	<div id="main" class="container-fluid" style="margin-top: 40px">
+	<div id="main" class="container-fluid" style="margin-top: 60px">
 		<h3 class="page-header">Abertura de Ordem de Serviços</h3>
 	</div>
 

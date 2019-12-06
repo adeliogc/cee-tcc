@@ -25,8 +25,6 @@ public class TccApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-//		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//		String senha = encoder.encode("1010");
-//		System.out.println("Senha: " + senha);		
+
 	}
 }

@@ -32,17 +32,38 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-					<li><a href="#">Link</a></li>
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">Cadastros <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a th:href="@{/cargos}">Cargos</a></li>
-							<li><a href="#">Cidades</a></li>
-							<li><a href="#">Colaboradores</a></li>
-							<li><a href="#">Equipamentos</a></li>
-							<li><a href="#">Setores</a></li>
+							<li><a th:href="@{/cidades}">Cidades</a></li>
+							<li><a th:href="@{/equipamentos}">Equipamentos</a></li>
+							<li><a th:href="@{/funcionarios}">Funcionários</a></li>
+							<li><a th:href="@{/setores}">Setores</a></li>
+							<li class="divider"></li>
+	            			<li><a th:href="@{/usuarios}"><span class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span>Usuários</a></li>
+							
+						</ul>
+					</li>
+					
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Ordem de Serviços <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Abertura de O.S.</a></li> 
+	            			<li><a th:href="@{/ordemServicos/baixar-os}">Encerramento de O.S.</a></li>
+							
+						</ul>
+					</li>
+					
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Empréstimos <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Empréstimo de Equip.</a></li> 
+	            			<li><a href="#">Devolução de Equip.</a></li>
+							
 						</ul>
 					</li>
 				</ul>

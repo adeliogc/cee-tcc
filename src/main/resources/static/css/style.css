@@ -4,19 +4,15 @@ body,html{
     background-color: #ecf0f5;
   }
 
-  nav.sidebar, .main{
-    -webkit-transition: margin 200ms ease-out;
-      -moz-transition: margin 200ms ease-out;
-      -o-transition: margin 200ms ease-out;
-      transition: margin 200ms ease-out;
-  }
+ 
 
   .main{
     padding: 10px 10px 0 10px;
      background-color: #ecf0f5;
+     margin-top: 50px;
   }
 
- @media (min-width: 765px) {
+ /* @media (min-width: 765px) {
 
     .main{
       position: absolute;
@@ -118,4 +114,4 @@ body,html{
   }
   section{
     padding-left: 15px;
-  }
+  } */

@@ -1,8 +1,15 @@
 package br.com.tcc.cee.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +29,13 @@ import br.com.tcc.cee.modelo.Cargo;
 import br.com.tcc.cee.modelo.Funcionario;
 import br.com.tcc.cee.repository.CargoRepository;
 import br.com.tcc.cee.util.Constantes;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 @Controller
 @RequestMapping("cargos")
@@ -109,4 +123,20 @@ public class CargoController implements IController<Cargo>{
 		return modelAndView;
 	}
 
+	@PostMapping("imprimir")
+	public void imprimir(@RequestParam Map<String, Object> parametros, HttpServletResponse response) throws JRException, SQLException, IOException {	
+		parametros = parametros == null ? parametros = new HashMap<>() : parametros;		
+		InputStream jasperStream = this.getClass().getResourceAsStream("/relatorios/relatorio_cargos.jasper");
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+		
+		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(cargoRepository.findAll());
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, dataSource);
+		
+		response.setContentType("application/pdf");
+		response.setHeader("Content-Disposition", "inline; filename=lista.pdf");
+		final OutputStream outStream = response.getOutputStream();
+		JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+	}
+
+	
 }
