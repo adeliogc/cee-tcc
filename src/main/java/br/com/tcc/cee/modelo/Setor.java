@@ -32,7 +32,6 @@ public class Setor implements Serializable{
 	private List<Funcionario> funcionarios = new ArrayList<>();
 	
 	public Setor() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Setor(String nome) {

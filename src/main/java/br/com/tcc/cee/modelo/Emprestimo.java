@@ -52,7 +52,6 @@ public class Emprestimo implements Serializable {
 	private List<EmprestimoItem> itens = new ArrayList<>();
 
 	public Emprestimo() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {

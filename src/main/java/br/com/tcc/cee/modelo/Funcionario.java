@@ -86,7 +86,6 @@ public class Funcionario implements Serializable {
 	}
 	
 	public Funcionario() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {

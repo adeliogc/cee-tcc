@@ -1,12 +1,17 @@
 package br.com.tcc.cee.controller;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.tcc.cee.modelo.OrdemServico;
+import br.com.tcc.cee.modelo.Equipamento;
+import br.com.tcc.cee.modelo.StatusOS;
 import br.com.tcc.cee.repository.EquipamentoRepository;
 import br.com.tcc.cee.repository.OrdemServicoRepository;
 
@@ -18,7 +23,7 @@ public class OrdemServicoController {
 	private EquipamentoRepository equipamentoRepository;
 	@Autowired
 	private OrdemServicoRepository osRepository;
-	private OrdemServico os = new OrdemServico();
+//	private OrdemServico os = new OrdemServico();
 
 
 	@GetMapping("baixar-os")
@@ -36,15 +41,15 @@ public class OrdemServicoController {
 //		return mv;
 //	}
 	
-//	@ModelAttribute("equipamentos")
-//	public List<Equipamento> getEquipamentos(){
-//		return equipamentoRepository.findAll();
-//	}
-//	
-//	@ModelAttribute("statusOs")
-//	public List<StatusOS> getStatus(){
-//		return Arrays.asList(StatusOS.values());
-//	}
+	@ModelAttribute("equipamentos")
+	public List<Equipamento> getEquipamentos(){
+		return equipamentoRepository.findAll();
+	}
+	
+	@ModelAttribute("statusOs")
+	public List<StatusOS> getStatus(){
+		return Arrays.asList(StatusOS.values());
+	}
 	
 //	@PostMapping("abertura-os")
 //	public ModelAndView salvarOs(@Valid @ModelAttribute("os") OrdemServico os, BindingResult result, RedirectAttributes attr) {

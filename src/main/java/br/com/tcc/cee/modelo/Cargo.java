@@ -30,7 +30,6 @@ public class Cargo implements Serializable{
 	private List<Funcionario> funcionarios;
 	
 	public Cargo() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Cargo(String nome) {

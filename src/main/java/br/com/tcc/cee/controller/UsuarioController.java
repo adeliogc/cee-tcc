@@ -1,6 +1,7 @@
 package br.com.tcc.cee.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -43,24 +44,22 @@ public class UsuarioController implements IController<Usuario>{
 	public ModelAndView saveAll() {
 		ModelAndView mv = new ModelAndView("redirect:/usuarios");
 		List<Usuario> usuarios = new ArrayList<>();
-//		usuarios = Arrays.asList(new Usuario("batman", "batman", new BCryptPasswordEncoder().encode("1010"), Perfil.ADMINISTRADOR), 
-//				new Usuario("superman", "superman", new BCryptPasswordEncoder().encode("1234"), Perfil.USUARIO), 
-//				new Usuario("robin", "robin", new BCryptPasswordEncoder().encode("1010"), Perfil.USUARIO), 
-//				new Usuario("flash", "flash", new BCryptPasswordEncoder().encode("12345"), Perfil.USUARIO), 
-//				new Usuario("aquaman", "aquaman", new BCryptPasswordEncoder().encode("1010"), Perfil.ADMINISTRADOR));
-//		usuarioRepository.saveAll(usuarios);
+		usuarios = Arrays.asList(new Usuario("batman", "batman", "1010", Perfil.ADMINISTRADOR), 
+				new Usuario("superman", "superman", "1234", Perfil.USUARIO), 
+				new Usuario("robin", "robin", "1010", Perfil.USUARIO), 
+				new Usuario("flash", "flash", "12345", Perfil.USUARIO), 
+				new Usuario("aquaman", "aquaman", "1010", Perfil.ADMINISTRADOR));
+		usuarioRepository.saveAll(usuarios);
 		return mv;
 	}
 
 	@Override
 	public ModelAndView form() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ModelAndView edit(Long id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -76,7 +75,6 @@ public class UsuarioController implements IController<Usuario>{
 
 	@Override
 	public ModelAndView salvar(@Valid Usuario entity, BindingResult result, RedirectAttributes attr) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

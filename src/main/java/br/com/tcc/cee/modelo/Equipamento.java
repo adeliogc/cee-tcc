@@ -41,7 +41,6 @@ public class Equipamento implements Serializable{
 	private String observacao;
 	
 	public Equipamento() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Equipamento(String nome,String numeroSerie, Categoria categoria, String observacao) {

@@ -82,11 +82,6 @@
 							<button type="submit" class="btn btn-success">
 								<i class="glyphicon glyphicon-search"></i>
 							</button>
-						</span> 	
-						<span class="input-group-btn">
-							<button class="btn btn-primary">
-								<i class="glyphicon glyphicon-print"></i>
-							</button>
 						</span> 						
 					</div>			
 				</div>
@@ -121,7 +116,7 @@
 						<td th:text="${usr.nome}">Analista de Sistemas</td>
 						<td th:text="${usr.perfil.nome}">Analista de Sistemas</td>
 						<td class="text-center">
-							<button type="button" class="btn btn-success btn-xs" th:text="${usr.enabled} ? 'Inativar' : 'Ativar'" th:href="@{/usuarios/ativar/{id}(id=${usr.id})}" >
+							<button type="button" class="btn btn-success btn-xs" th:text="${usr.ativo} ? 'Inativar' : 'Ativar'" th:href="@{/usuarios/ativar/{id}(id=${usr.id})}" >
 								  <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
 							</button>
 							<a class="btn btn-warning btn-xs" th:href="@{/usuarios/edit/{id}(id=${usr.id})}">Editar</a>  

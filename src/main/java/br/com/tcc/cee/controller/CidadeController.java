@@ -1,8 +1,15 @@
 package br.com.tcc.cee.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,6 +28,13 @@ import br.com.tcc.cee.modelo.Cidade;
 import br.com.tcc.cee.modelo.Estado;
 import br.com.tcc.cee.repository.CidadeRepository;
 import br.com.tcc.cee.util.Constantes;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 @RequestMapping("cidades")
 @Controller
@@ -104,6 +119,21 @@ public class CidadeController implements IController<Cidade>{
 		ModelAndView modelAndView = new ModelAndView("cidades/list");
 		modelAndView.addObject("cidades", cidadeRepository.findByNomeContaining(descricao.toUpperCase()));
 		return modelAndView;
+	}
+	
+	@PostMapping("imprimir")
+	public void imprimir(@RequestParam Map<String, Object> parametros, HttpServletResponse response) throws JRException, SQLException, IOException {	
+		parametros = parametros == null ? parametros = new HashMap<>() : parametros;		
+		InputStream jasperStream = this.getClass().getResourceAsStream("/relatorios/relatorio_cidades.jasper");
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+		
+		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(cidadeRepository.findAll());
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, dataSource);
+		
+		response.setContentType("application/pdf");
+		response.setHeader("Content-Disposition", "inline; filename=lista.pdf");
+		final OutputStream outStream = response.getOutputStream();
+		JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
 	}
 
 }

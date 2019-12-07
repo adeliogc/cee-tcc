@@ -68,7 +68,6 @@ public class OrdemServicoItem implements Serializable{
 	}
 	
 	public OrdemServicoItem() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public OrdemServicoItem(OrdemServico ordemServico) {
