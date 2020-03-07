@@ -1,8 +1,6 @@
 package br.com.tcc.cee.modelo;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,16 +8,17 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
-
-import br.com.tcc.cee.repository.OrdemServicoRepository;
 
 @Entity
 @Table(name="ORDEM_SERVICOS")
@@ -44,12 +43,18 @@ public class OrdemServico implements Serializable {
 //	@Size(min = 1, message = "Deve possuir pelo menos um item")
 //	@NotNull(message = "Não há itens incluídos na ordem de serviço")
 	@OneToMany(
-		        mappedBy = "ordemServico",
+				fetch = FetchType.LAZY, 
 		        cascade = CascadeType.ALL,
 		        orphanRemoval = true
 		    )
+	@JoinColumn(name = "os_id")
 	private List<OrdemServicoItem> itens = new ArrayList<OrdemServicoItem>();
 
+	@PrePersist
+	public void init() {
+		this.dataAbertura = LocalDateTime.now();
+		this.numeroOrdemServico = "0000000000";
+	}
 	
 	public Long getId() {
 		return id;
@@ -74,26 +79,33 @@ public class OrdemServico implements Serializable {
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
-
-	public List<OrdemServicoItem> getItens() {
-		return itens;
-	}
-
+	
 	public void setItens(List<OrdemServicoItem> itens) {
 		this.itens = itens;
 	}
 	
-	public void geraNumeroOrdemServico(OrdemServicoRepository osRepository) {
-		int anoDaOS = LocalDate.now().getYear();
-		int totalOsNoAno = osRepository.totalOsNoAno(anoDaOS);
-		this.numeroOrdemServico = anoDaOS+new DecimalFormat("000000").format(totalOsNoAno);
+	public List<OrdemServicoItem> getItens() {
+		return itens;
 	}
 	
+	public void adicionaItem(OrdemServicoItem item) {
+		this.itens.add(item);
+	}
 
-	public OrdemServico() {
-		this.dataAbertura = LocalDateTime.now();
+	public void removeItem(OrdemServicoItem item) {
+		this.itens.remove(item);
 	}
 	
+//	public void geraNumeroOrdemServico() {
+//		int anoDaOS = LocalDate.now().getYear();
+//		int totalOsNoAno = osRepository.totalOsNoAno(anoDaOS);
+//		this.numeroOrdemServico = anoDaOS+new DecimalFormat("000000").format(totalOsNoAno);
+//	}
 	
-	
+//	public OrdemServico(OrdemServicoRepository repository) {
+//		this.dataAbertura = LocalDateTime.now();
+//		this.numeroOrdemServico = "0000000000";
+//		this.osRepository = repository;
+//	}
+
 }

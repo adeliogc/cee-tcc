@@ -1,77 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="layout/Layout :: head">
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CEE System</title>
 
-<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" />
-<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap-theme.min.css}" />
-<link rel="stylesheet" th:href="@{/css/confirm-dialog.css}" />
-<link rel="stylesheet" th:href="@{/css/estilo.css}" />
-
-<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
-<script type="text/javascript" th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
-
+ 
 </head>
 <body>
+<header th:replace="layout/Layout :: header"></header>
 
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> 
-					<span class="icon-bar"></span> 
-					<span class="icon-bar"></span> 
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" th:href="@{/}">CEE System</a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">Cadastros <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a th:href="@{/cargos}">Cargos</a></li>
-							<li><a th:href="@{/cidades}">Cidades</a></li>
-							<li><a th:href="@{/equipamentos}">Equipamentos</a></li>
-							<li><a th:href="@{/funcionarios}">Funcionários</a></li>
-							<li><a th:href="@{/setores}">Setores</a></li>
-							<li class="divider"></li>
-	            			<li><a th:href="@{/usuarios}"><span class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span>Usuários</a></li>
-							
-						</ul>
-					</li>
-					
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">Ordem de Serviços <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Abertura de O.S.</a></li> 
-	            			<li><a th:href="@{/ordemServicos/baixar-os}">Encerramento de O.S.</a></li>
-							
-						</ul>
-					</li>
-					
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">Empréstimos <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Empréstimo de Equip.</a></li> 
-	            			<li><a href="#">Devolução de Equip.</a></li>
-							
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
-	<div id="main" class="container-fluid" style="margin-top: 60px">
+	<div id="main" class="container-fluid" style="margin-top: 30px">
 		<h3 class="page-header">Abertura de Ordem de Serviços</h3>
 	</div>
 
@@ -82,6 +20,12 @@
 		</div>
 		<form th:object="${os}" th:action="@{/ordemServicos/abertura-os}" method="post">
 			<input type="hidden" th:field="*{id}"/>
+			<div class="row">
+				<div class="col-xs-6">
+					<label style="font-size: 25px;">Número da OS: </label>
+					<label><span class="label label-success" style="font-size: 25px;" th:text="*{numeroOrdemServico}">00001</span></label>
+				</div>
+			</div>
 			
 			<div class="row" >
 				<div class="form-group col-sm-12">
@@ -89,51 +33,17 @@
 					<textarea class="form-control col-sm-10" rows="3" th:field="*{observacao}"></textarea>
 				</div>
 			</div>
-			<div class="row">
-<!-- 				<form id="detalhe" th:object="${itemOs}" class="form-inline" th:action="@{/ordemServicos/abertura-os/addItem}" method="post"> -->
-<!-- 					<div class="row"> -->
-<!-- 						<label style="margin-left: 32px; margin-right: 10px;">Selecionar Equipamento</label> -->
-<!-- 					</div> -->
-<!-- 					<div class="form-group col-sm-10"> -->
-<!-- 						<select class="form-control" th:field="*{equipamento}"> -->
-<!-- 							<option th:each="equip : ${equipamentos}" th:value="${equip.id}" th:text="${equip.numeroSerie} + ' - ' + ${equip.nome}">001-Radio de teste </option> -->
-<!-- 						</select> -->
-<!-- 					</div> -->
-<!-- 					<div class="form-group col-sm-1"> -->
-<!-- 						<button type="submit" class="btn btn-primary">Adicionar</button> -->
-<!-- 					</div> -->
 			
-<!-- 					<div id="list" class="row container-fluid"> -->
-
-<!-- 						<div class="table-responsive col-md-12"> -->
-<!-- 							<table class="table table-striped"> -->
-<!-- 								<thead> -->
-<!-- 									<tr> -->
-<!-- 										<th class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Id.</th> -->
-<!-- 										<th class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Descrição</th> -->
-<!-- 										<th class="col-xs-3 col-sm-3 col-md-3 col-lg-3">Status</th> -->
-<!-- 										<th class="actions">Ações</th> -->
-<!-- 									</tr> -->
-<!-- 								</thead> -->
-<!-- 								<tbody> -->
-<!-- 									<tr th:each="item : ${items}"> -->
-<!-- 										<td th:text="${item.equipamento.id">1001</td> -->
-<!-- 										<td th:text="${item.equipamento.nome">Analista de Sistemas</td> -->
-<!-- 										<td>Analista de Sistemas</td> -->
-<!-- 										<td class="actions"> -->
-<!-- 											<a class="btn btn-success btn-xs" href="view.html">Visualizar</a> -->
-<!-- 										</td> -->
-<!-- 									</tr> -->
-<!-- 								</tbody> -->
-<!-- 							</table> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</form> -->
+			<div class="row" >
+				<div class="form-group col-sm-12">
+					<label for="buscar_equipamentos" >Equipamentos</label>
+					<input id="buscar_equipamentos" name="buscar_equipamentos" autocomplete="on" type="text" class="form-control"/>
+				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-12">
-					<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>  Salvar</button>
+					<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>  Adicionar Itens</button>
 					<a th:href="@{/}" class="btn btn-danger"><span class="glyphicon glyphicon-off"></span>  Cancelar</a>
 				</div>
 			</div>
@@ -144,6 +54,7 @@
 		<hr>
 		<p>&copy; 2019 CEE System - Controle de Entrega de Equipamentos</p>
 	</footer>
+	
 </body>
 
 </html>

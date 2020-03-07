@@ -1,75 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="layout/Layout :: head">
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CEE System</title>
-
-<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" />
-<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap-theme.min.css}" />
-<link rel="stylesheet" th:href="@{/css/confirm-dialog.css}" />
-<link rel="stylesheet" th:href="@{/css/estilo.css}" />
-
-<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
-<script type="text/javascript" th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
-
 </head>
 <body>
-
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> 
-					<span class="icon-bar"></span> 
-					<span class="icon-bar"></span> 
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" th:href="@{/}">CEE System</a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">Cadastros <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a th:href="@{/cargos}">Cargos</a></li>
-							<li><a th:href="@{/cidades}">Cidades</a></li>
-							<li><a th:href="@{/equipamentos}">Equipamentos</a></li>
-							<li><a th:href="@{/funcionarios}">Funcionários</a></li>
-							<li><a th:href="@{/setores}">Setores</a></li>
-							<li class="divider"></li>
-	            			<li><a th:href="@{/usuarios}"><span class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span>Usuários</a></li>
-							
-						</ul>
-					</li>
-					
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">Ordem de Serviços <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Abertura de O.S.</a></li> 
-	            			<li><a th:href="@{/ordemServicos/baixar-os}">Encerramento de O.S.</a></li>
-							
-						</ul>
-					</li>
-					
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">Empréstimos <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Empréstimo de Equip.</a></li> 
-	            			<li><a href="#">Devolução de Equip.</a></li>
-							
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+<header th:replace="layout/Layout :: header"></header>
 
 	<div class="container-fluid" style="margin-top: 60px">
 		<div class="panel panel-default">
@@ -114,14 +50,7 @@
 			<input type="submit" value="Salvar" class="btn btn-success"/>
 			<a class="btn btn-danger" th:href="@{/equipamentos}" role="button">Cancelar</a>
 		</form>
-  			</div>
-  			<div class="panel-footer">
-		    <h3 class="panel-title">&copy; 2019 CEE System - Controle de Equipamentos Eletrônicos</h3>
-		  </div>
-		</div>
-		
-		
 	</div>
-
+<footer th:replace="layout/Layout :: footer"></footer>
 </body>
 </html>

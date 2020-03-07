@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<table th:fragment="itemsOrdemServico" class="d-none">
+		<tbody id="itensOS">
+			<tr id="linha_{ID}">
+				<td class="d-none"><input type="hidden" value="{ID}" name="itemId[]" /></td>
+				<td>{numeroSerie}</td>
+				<td>{nome}</td>
+				<td><span class="label label-success">Aberta</span></td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>

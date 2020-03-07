@@ -9,7 +9,8 @@ import br.com.tcc.cee.modelo.Equipamento;
 
 @Repository
 public interface EquipamentoRepository extends JpaRepository<Equipamento, Long>{
+	
+	List<Equipamento> findByNomeContaining(String nome);
 
-	List<Equipamento> findByNomeContaining(String descricao);
 
 }

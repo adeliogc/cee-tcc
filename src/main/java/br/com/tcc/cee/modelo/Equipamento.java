@@ -93,6 +93,8 @@ public class Equipamento implements Serializable{
 	public String getIdFormatado() {
 		return new DecimalFormat("000000").format(id);
 	}
+	
+	
 
 
 }

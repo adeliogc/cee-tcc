@@ -1,33 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="layout/Layout :: head">
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CEE System</title>
-
-<link rel="stylesheet"
-	th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" />
-<link rel="stylesheet"
-	th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap-theme.min.css}" />
-<link rel="stylesheet" th:href="@{/css/estilo.css}" />
-<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
-<script type="text/javascript"
-	th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/jquery.mask.min.js}"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#cep').mask('00000-000');
-		$('#cpf').mask('000.000.000-00');
-		$('#celular').mask('(00) 00000-0000');
-		$('#telefone').mask('(00) 0000-0000');
-	})
-</script>
 </head>
 <body>
-
-	<div class="container-fluid" style="margin-top: 40px">
+<header th:replace="layout/Layout :: header"></header>
+	<div class="container-fluid" style="margin-top: 60px">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">
@@ -177,10 +156,8 @@
 				<a class="btn btn-danger" th:href="@{/funcionarios}" role="button"><span class="glyphicon glyphicon-off"></span>  Cancelar</a>
 			</form>
 		</div>
-		<div class="panel-footer">
-			<h3 class="panel-title">&copy; 2019 CEE System - Controle de Equipamentos Eletrônicos</h3>
-		</div>
 	</div>
 	</div>
+<footer th:replace="layout/Layout :: footer"></footer>
 </body>
 </html>
